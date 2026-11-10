@@ -1,247 +1,118 @@
 # =====================================================================
-# AP2 MOTIF ANALYSIS — WSL / MEME-CHIP SETUP AND ANALYSIS
+# Toxoplasma gondii AP2 CUT&Tag motif analysis
 #
-# Toxoplasma gondii AP2 CUT&Tag / BETA motif analysis
+# MEME Suite v5.5.4
 #
-# IMPORTANT:
-# Commands are divided into:
+# This script performs:
+#   1. General motif discovery using all BETA-associated peaks
+#   2. Differential motif analysis:
+#        Activated vs Nonresponsive
+#        Repressed vs Nonresponsive
+#   3. EPS-to-PNG conversion of motif logos
 #
-#   A. WINDOWS — run in Git Bash / PowerShell
-#   B. UBUNTU  — run after entering WSL
+# Run from the directory containing:
 #
-# MEME Suite used for this analysis: v5.5.4
+#   all_BETA_peaks/
+#   motif_classes/
+#
+# Individual sections can also be run separately.
 # =====================================================================
 
 
 # =====================================================================
-# PART A — WINDOWS
-# Run these commands from Git Bash or PowerShell
+# CHECK REQUIRED PROGRAMS
 # =====================================================================
-
-
-# ---------------------------------------------------------------------
-# 1. Check installed WSL distributions and WSL version
-#
-# -l = list distributions
-# -v = verbose; also shows whether each distro uses WSL1 or WSL2
-# ---------------------------------------------------------------------
-
-wsl -l -v
-
-
-# We use the distribution called:
-#
-#     Ubuntu
-#
-# NOT Ubuntu-22.04, because MEME Suite is installed in Ubuntu.
-
-
-# ---------------------------------------------------------------------
-# 2. Start the correct Ubuntu distribution
-# ---------------------------------------------------------------------
-
-wsl -d Ubuntu
-
-
-# =====================================================================
-# FROM THIS POINT ON, COMMANDS RUN INSIDE UBUNTU / WSL
-# =====================================================================
-
-
-# ---------------------------------------------------------------------
-# 3. Confirm Ubuntu / WSL environment
-# ---------------------------------------------------------------------
-
-uname -r
-
-cat /etc/os-release
-
-
-# ---------------------------------------------------------------------
-# 4. Check whether MEME Suite is already installed
-# ---------------------------------------------------------------------
 
 meme-chip -version
-
 streme --version
-
 tomtom -version
-
-
-# Expected for this analysis:
-#
-#     5.5.4
-#
-# If these commands return versions, DO NOT reinstall MEME.
-#
-# If "command not found" appears, install the dependencies below.
+gs --version
 
 
 # =====================================================================
-# OPTIONAL INSTALLATION SECTION
-# Only needed on a new computer / fresh Ubuntu installation
-# =====================================================================
-
-
-# ---------------------------------------------------------------------
-# 5. Update Ubuntu package information
-# ---------------------------------------------------------------------
-
-sudo apt update
-
-
-# ---------------------------------------------------------------------
-# 6. Install MEME Suite dependencies
+# GENERAL AP2 MOTIF DISCOVERY
 #
-# build-essential = compiler/build tools
-# perl            = required by MEME Suite scripts
-# python3         = Python runtime
-# zlib1g-dev      = compression library
-# ghostscript     = required for EPS -> PNG motif-logo conversion
-# libexpat1-dev   = XML dependency
-# libxml-simple-perl = Perl XML::Simple module used by MEME-ChIP
-# wget            = command-line download utility
-# ---------------------------------------------------------------------
-
-sudo apt install -y \
-  build-essential \
-  perl \
-  python3 \
-  zlib1g-dev \
-  ghostscript \
-  libexpat1-dev \
-  libxml-simple-perl \
-  wget
-
-
-# ---------------------------------------------------------------------
-# 7. MEME Suite installation
-#
-# ONLY USE THIS SECTION IF meme-chip IS NOT ALREADY INSTALLED.
-#
-# MEME Suite v5.5.4 was used for this project.
-# ---------------------------------------------------------------------
-
-cd ~
-
-wget https://meme-suite.org/meme/meme-software/5.5.4/meme-5.5.4.tar.gz
-
-tar zxf meme-5.5.4.tar.gz
-
-cd meme-5.5.4
-
-
-./configure \
-  --prefix=$HOME/meme \
-  --enable-build-libxml2 \
-  --enable-build-libxslt
-
-
-make
-
-make test
-
-make install
-
-
-# ---------------------------------------------------------------------
-# 8. Add MEME Suite to PATH
-#
-# Only necessary if meme-chip is not found automatically.
-# ---------------------------------------------------------------------
-
-export PATH="$HOME/meme/bin:$HOME/meme/libexec/meme-5.5.4:$PATH"
-
-
-# Make this permanent for future Ubuntu sessions:
-
-echo 'export PATH="$HOME/meme/bin:$HOME/meme/libexec/meme-5.5.4:$PATH"' >> ~/.bashrc
-
-source ~/.bashrc
-
-
-# ---------------------------------------------------------------------
-# 9. Confirm MEME installation
-# ---------------------------------------------------------------------
-
-meme-chip -version
-
-streme --version
-
-tomtom -version
-
-which meme-chip
-
-which streme
-
-which tomtom
-
-
-# =====================================================================
-# ACCESS WINDOWS S: DRIVE FROM UBUNTU
-# =====================================================================
-
-
-# ---------------------------------------------------------------------
-# 10. Create Linux mount point
-#
-# -p means create parent directories if necessary and do not complain
-# if /mnt/s already exists.
-# ---------------------------------------------------------------------
-
-sudo mkdir -p /mnt/s
-
-
-# ---------------------------------------------------------------------
-# 11. Mount Windows S: drive
-#
-# drvfs allows WSL to access a Windows drive.
-# ---------------------------------------------------------------------
-
-sudo mount -t drvfs S: /mnt/s
-
-
-# Confirm the drive is accessible:
-
-ls /mnt/s
-
-
-# =====================================================================
-# MOVE TO AP2 MOTIF ANALYSIS DIRECTORY
-# =====================================================================
-
-
-cd "/mnt/s/CELL/Elec/AP2_project_Second_experiment/Paper1_BETA/BETA_motif_peak_sets/FASTA_250bp"
-
-
-# Confirm expected inputs:
-
-ls
-
-ls all_BETA_peaks
-
-ls motif_classes
-
-
-# Optional: check number of sequences in FASTA files
-
-grep -c '^>' all_BETA_peaks/*.fa
-
-grep -c '^>' motif_classes/*.fa
-
-
-# =====================================================================
-# GENERAL AP2 BINDING-MOTIF ANALYSIS
+# Input:
+#   all BETA-associated peaks for each AP2
 #
 # Question:
-# What DNA motif characterizes AP2 binding?
-#
-# Example shown for AP2IV-3.
+#   Which sequence motifs characterize AP2-bound regions?
 # =====================================================================
 
 
-mkdir -p Meme_general_AP2IV-3
+# ---------------------------------------------------------------------
+# AP2III-1
+# ---------------------------------------------------------------------
 
+mkdir -p Meme_general_AP2III-1
+
+meme-chip \
+  -dna \
+  -ccut 0 \
+  -minw 4 \
+  -maxw 15 \
+  -meme-mod zoops \
+  -meme-nmotifs 5 \
+  -oc Meme_general_AP2III-1 \
+  all_BETA_peaks/AP2III-1_all_BETA_peaks_250bp.fa
+
+
+# ---------------------------------------------------------------------
+# AP2III-3
+# ---------------------------------------------------------------------
+
+mkdir -p Meme_general_AP2III-3
+
+meme-chip \
+  -dna \
+  -ccut 0 \
+  -minw 4 \
+  -maxw 15 \
+  -meme-mod zoops \
+  -meme-nmotifs 5 \
+  -oc Meme_general_AP2III-3 \
+  all_BETA_peaks/AP2III-3_all_BETA_peaks_250bp.fa
+
+
+# ---------------------------------------------------------------------
+# AP2III-4
+# ---------------------------------------------------------------------
+
+mkdir -p Meme_general_AP2III-4
+
+meme-chip \
+  -dna \
+  -ccut 0 \
+  -minw 4 \
+  -maxw 15 \
+  -meme-mod zoops \
+  -meme-nmotifs 5 \
+  -oc Meme_general_AP2III-4 \
+  all_BETA_peaks/AP2III-4_all_BETA_peaks_250bp.fa
+
+
+# ---------------------------------------------------------------------
+# AP2IV-2
+# ---------------------------------------------------------------------
+
+mkdir -p Meme_general_AP2IV-2
+
+meme-chip \
+  -dna \
+  -ccut 0 \
+  -minw 4 \
+  -maxw 15 \
+  -meme-mod zoops \
+  -meme-nmotifs 5 \
+  -oc Meme_general_AP2IV-2 \
+  all_BETA_peaks/AP2IV-2_all_BETA_peaks_250bp.fa
+
+
+# ---------------------------------------------------------------------
+# AP2IV-3
+# ---------------------------------------------------------------------
+
+mkdir -p Meme_general_AP2IV-3
 
 meme-chip \
   -dna \
@@ -254,14 +125,113 @@ meme-chip \
   all_BETA_peaks/AP2IV-3_all_BETA_peaks_250bp.fa
 
 
+# ---------------------------------------------------------------------
+# AP2IX-1
+# ---------------------------------------------------------------------
+
+mkdir -p Meme_general_AP2IX-1
+
+meme-chip \
+  -dna \
+  -ccut 0 \
+  -minw 4 \
+  -maxw 15 \
+  -meme-mod zoops \
+  -meme-nmotifs 5 \
+  -oc Meme_general_AP2IX-1 \
+  all_BETA_peaks/AP2IX-1_all_BETA_peaks_250bp.fa
+
+
+# ---------------------------------------------------------------------
+# AP2IX-3
+# ---------------------------------------------------------------------
+
+mkdir -p Meme_general_AP2IX-3
+
+meme-chip \
+  -dna \
+  -ccut 0 \
+  -minw 4 \
+  -maxw 15 \
+  -meme-mod zoops \
+  -meme-nmotifs 5 \
+  -oc Meme_general_AP2IX-3 \
+  all_BETA_peaks/AP2IX-3_all_BETA_peaks_250bp.fa
+
+
+# ---------------------------------------------------------------------
+# AP2IX-9
+# ---------------------------------------------------------------------
+
+mkdir -p Meme_general_AP2IX-9
+
+meme-chip \
+  -dna \
+  -ccut 0 \
+  -minw 4 \
+  -maxw 15 \
+  -meme-mod zoops \
+  -meme-nmotifs 5 \
+  -oc Meme_general_AP2IX-9 \
+  all_BETA_peaks/AP2IX-9_all_BETA_peaks_250bp.fa
+
+
+# ---------------------------------------------------------------------
+# AP2VI-3
+# ---------------------------------------------------------------------
+
+mkdir -p Meme_general_AP2VI-3
+
+meme-chip \
+  -dna \
+  -ccut 0 \
+  -minw 4 \
+  -maxw 15 \
+  -meme-mod zoops \
+  -meme-nmotifs 5 \
+  -oc Meme_general_AP2VI-3 \
+  all_BETA_peaks/AP2VI-3_all_BETA_peaks_250bp.fa
+
+
+# ---------------------------------------------------------------------
+# AP2X-10
+# ---------------------------------------------------------------------
+
+mkdir -p Meme_general_AP2X-10
+
+meme-chip \
+  -dna \
+  -ccut 0 \
+  -minw 4 \
+  -maxw 15 \
+  -meme-mod zoops \
+  -meme-nmotifs 5 \
+  -oc Meme_general_AP2X-10 \
+  all_BETA_peaks/AP2X-10_all_BETA_peaks_250bp.fa
+
+
+# ---------------------------------------------------------------------
+# AP2X-6
+# ---------------------------------------------------------------------
+
+mkdir -p Meme_general_AP2X-6
+
+meme-chip \
+  -dna \
+  -ccut 0 \
+  -minw 4 \
+  -maxw 15 \
+  -meme-mod zoops \
+  -meme-nmotifs 5 \
+  -oc Meme_general_AP2X-6 \
+  all_BETA_peaks/AP2X-6_all_BETA_peaks_250bp.fa
+
+
+
 # =====================================================================
 # DIFFERENTIAL MOTIF ANALYSIS
 #
-# Question:
-# Which motifs are enriched in transcriptionally responsive AP2-bound
-# regions relative to AP2-bound but non-responsive regions?
-#
-# Four AP2s had sufficient responsive peaks:
+# Only AP2s with sufficient responsive peak numbers were analysed:
 #
 #   AP2III-1
 #   AP2IV-3
@@ -271,10 +241,10 @@ meme-chip \
 # For each AP2:
 #
 #   Activated vs Nonresponsive
-#   Repressed  vs Nonresponsive
+#   Repressed vs Nonresponsive
 #
-# -neg = AP2-specific nonresponsive peak sequences
-# final FASTA argument = responsive primary sequence set
+# The -neg file is always the NONRESPONSIVE peak set from the SAME AP2.
+# The final FASTA argument is the primary responsive peak set.
 # =====================================================================
 
 
@@ -313,6 +283,7 @@ meme-chip \
   motif_classes/AP2III-1_Repressed_250bp.fa
 
 
+
 # =====================================================================
 # AP2IV-3
 # =====================================================================
@@ -346,6 +317,7 @@ meme-chip \
   -neg motif_classes/AP2IV-3_Nonresponsive_250bp.fa \
   -oc Meme_differential_AP2IV-3/Repressed_vs_Nonresponsive \
   motif_classes/AP2IV-3_Repressed_250bp.fa
+
 
 
 # =====================================================================
@@ -383,6 +355,7 @@ meme-chip \
   motif_classes/AP2IX-9_Repressed_250bp.fa
 
 
+
 # =====================================================================
 # AP2X-10
 # =====================================================================
@@ -418,16 +391,13 @@ meme-chip \
   motif_classes/AP2X-10_Repressed_250bp.fa
 
 
-# =====================================================================
-# CONVERT MEME EPS LOGOS TO PNG
-#
-# MEME generated EPS logos correctly, but automatic PNG generation was
-# unreliable in our WSL installation.
-#
-# Ghostscript is therefore used to convert every EPS motif logo to a
-# 300-dpi PNG.
-# =====================================================================
 
+# =====================================================================
+# CONVERT EPS MOTIF LOGOS TO PNG
+#
+# Ghostscript converts all EPS files produced by MEME Suite to
+# 300-dpi PNG files.
+# =====================================================================
 
 while IFS= read -r -d '' logo; do
 
@@ -445,6 +415,3 @@ done < <(
 )
 
 
-# =====================================================================
-# END
-# =====================================================================
