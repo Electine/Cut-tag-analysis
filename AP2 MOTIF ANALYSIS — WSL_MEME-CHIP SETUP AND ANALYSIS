@@ -265,7 +265,7 @@ meme-chip \
   -meme-mod zoops \
   -meme-nmotifs 5 \
   -neg motif_classes/AP2III-1_Nonresponsive_250bp.fa \
-  -oc Meme_differential_AP2III-1/Activated_vs_Nonresponsive \
+  -o Meme_differential_AP2III-1/Activated_vs_Nonresponsive \
   motif_classes/AP2III-1_Activated_250bp.fa
 
 
@@ -279,7 +279,7 @@ meme-chip \
   -meme-mod zoops \
   -meme-nmotifs 5 \
   -neg motif_classes/AP2III-1_Nonresponsive_250bp.fa \
-  -oc Meme_differential_AP2III-1/Repressed_vs_Nonresponsive \
+  -o Meme_differential_AP2III-1/Repressed_vs_Nonresponsive \
   motif_classes/AP2III-1_Repressed_250bp.fa
 
 
@@ -301,7 +301,7 @@ meme-chip \
   -meme-mod zoops \
   -meme-nmotifs 5 \
   -neg motif_classes/AP2IV-3_Nonresponsive_250bp.fa \
-  -oc Meme_differential_AP2IV-3/Activated_vs_Nonresponsive \
+  -o Meme_differential_AP2IV-3/Activated_vs_Nonresponsive \
   motif_classes/AP2IV-3_Activated_250bp.fa
 
 
@@ -315,7 +315,7 @@ meme-chip \
   -meme-mod zoops \
   -meme-nmotifs 5 \
   -neg motif_classes/AP2IV-3_Nonresponsive_250bp.fa \
-  -oc Meme_differential_AP2IV-3/Repressed_vs_Nonresponsive \
+  -o Meme_differential_AP2IV-3/Repressed_vs_Nonresponsive \
   motif_classes/AP2IV-3_Repressed_250bp.fa
 
 
@@ -337,7 +337,7 @@ meme-chip \
   -meme-mod zoops \
   -meme-nmotifs 5 \
   -neg motif_classes/AP2IX-9_Nonresponsive_250bp.fa \
-  -oc Meme_differential_AP2IX-9/Activated_vs_Nonresponsive \
+  -o Meme_differential_AP2IX-9/Activated_vs_Nonresponsive \
   motif_classes/AP2IX-9_Activated_250bp.fa
 
 
@@ -351,7 +351,7 @@ meme-chip \
   -meme-mod zoops \
   -meme-nmotifs 5 \
   -neg motif_classes/AP2IX-9_Nonresponsive_250bp.fa \
-  -oc Meme_differential_AP2IX-9/Repressed_vs_Nonresponsive \
+  -o Meme_differential_AP2IX-9/Repressed_vs_Nonresponsive \
   motif_classes/AP2IX-9_Repressed_250bp.fa
 
 
@@ -373,7 +373,7 @@ meme-chip \
   -meme-mod zoops \
   -meme-nmotifs 5 \
   -neg motif_classes/AP2X-10_Nonresponsive_250bp.fa \
-  -oc Meme_differential_AP2X-10/Activated_vs_Nonresponsive \
+  -o Meme_differential_AP2X-10/Activated_vs_Nonresponsive \
   motif_classes/AP2X-10_Activated_250bp.fa
 
 
@@ -387,7 +387,7 @@ meme-chip \
   -meme-mod zoops \
   -meme-nmotifs 5 \
   -neg motif_classes/AP2X-10_Nonresponsive_250bp.fa \
-  -oc Meme_differential_AP2X-10/Repressed_vs_Nonresponsive \
+  -o Meme_differential_AP2X-10/Repressed_vs_Nonresponsive \
   motif_classes/AP2X-10_Repressed_250bp.fa
 
 
