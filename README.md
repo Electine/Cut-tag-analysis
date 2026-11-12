@@ -61,7 +61,7 @@ The workflow requires:
 - Python 3
 - Ghostscript
 - standard compilation and XML libraries required by MEME Suite
-- Databases for individual species or non-redudant Tomtom querying dtatabase
+- Databases for individual species or non-redudant reference inquiry by Tomtom
   
 
 On Ubuntu, supporting dependencies can be installed with:
@@ -245,6 +245,37 @@ summary.tsv
 MEME and STREME provide de novo motif discovery, while CentriMo evaluates positional enrichment of motifs within the peak-centred regions.
 
 Motif significance and enrichment statistics should be evaluated before biological interpretation. The requested number of MEME motifs does not imply that all recovered motifs are statistically or biologically meaningful.
+
+## Reference motif comparison
+
+De novo motifs identified with MEME/STREME were compared against known transcription-factor motif databases using Tomtom.
+
+Reference databases included:
+
+- *Plasmodium* / ApiAP2 motif collections from the MEME motif database bundle
+- JASPAR CORE non-redundant motifs
+- Curated experimentally supported *Toxoplasma gondii* ApiAP2 motifs, where available
+
+Example database setup:
+
+```bash
+mkdir -p reference_motif_databases
+cd reference_motif_databases
+
+wget https://meme-suite.org/meme/meme-software/Databases/motifs/motif_databases.12.27.tgz
+tar -xzf motif_databases.12.27.tgz
+```
+
+JASPAR CORE motifs can be downloaded directly in MEME format:
+
+```bash
+wget -O JASPAR2026_CORE_non-redundant_pfms_meme.txt \
+https://jaspar.elixir.no/download/data/2026/CORE/JASPAR2026_CORE_non-redundant_pfms_meme.txt
+```
+
+Tomtom was then used to compare AP2-specific de novo motifs against these reference collections.
+
+A significant Tomtom match indicates similarity between motif PWMs and does not by itself establish the identity of the responsible transcription factor.
 
 ## Reproducibility
 
