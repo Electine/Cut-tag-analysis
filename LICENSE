@@ -1,0 +1,9 @@
+cff-version: 1.2.0
+message: "If you use or adapt this workflow in your research, please cite this repository."
+type: software
+title: "CUT&Tag AP2 motif analysis and multimodal integration"
+authors:
+  - family-names: "Magoye"
+    given-names: "Electine F."
+repository-code: "https://github.com/Electine/Cut-tag-analysis"
+license: MIT
