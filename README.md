@@ -61,6 +61,8 @@ The workflow requires:
 - Python 3
 - Ghostscript
 - standard compilation and XML libraries required by MEME Suite
+- Databases for individual species or non-redudant Tomtom querying dtatabase
+  
 
 On Ubuntu, supporting dependencies can be installed with:
 
