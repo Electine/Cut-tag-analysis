@@ -1,0 +1,40 @@
+## Custom *Toxoplasma* ApiAP2 motif reference
+
+A small TgApiAP2 motif reference was generated from experimentally reported binding sequences for Tomtom comparison.
+
+```bash
+iupac2meme -dna CAGTGT | \
+awk '/^MOTIF / {$0="MOTIF TgAP2IX-9 CAGTGT"} {print}' \
+> AP2IX-9_named.meme
+
+iupac2meme -dna ACCCCCCT | \
+awk '/^MOTIF / {$0="MOTIF TgAP2IV-4 ACCCCCCT"} {print}' \
+> AP2IV-4_named.meme
+
+iupac2meme -dna GCTAGC | \
+awk '/^MOTIF / {$0="MOTIF TgAP2XI-5 GCTAGC"} {print}' \
+> AP2XI-5_named.meme
+
+iupac2meme -dna YGCATGCR | \
+awk '/^MOTIF / {$0="MOTIF TgAP2XII-8_TRP2-like YGCATGCR"} {print}' \
+> AP2XII-8_named.meme
+```
+
+Merge:
+
+```bash
+meme2meme \
+  AP2IX-9_named.meme \
+  AP2IV-4_named.meme \
+  AP2XI-5_named.meme \
+  AP2XII-8_named.meme \
+  > Toxoplasma_ApiAP2_known_motifs.meme
+```
+
+Check:
+
+```bash
+grep '^MOTIF ' Toxoplasma_ApiAP2_known_motifs.meme
+```
+
+The database can be expanded as additional experimentally supported TgApiAP2 motifs become available.
