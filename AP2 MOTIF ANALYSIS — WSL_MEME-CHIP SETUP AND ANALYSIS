@@ -413,5 +413,11 @@ done < <(
     -name '*.eps' \
     -print0
 )
-
+# =====================================================================
+# Compare if motifs in repressed are simlar to activated 
+tomtom \
+  -thresh 0.1 \
+  -oc AP2IV-3_Activated_vs_Repressed_Tomtom \
+  Meme_differential_AP2_IV-3/Activated_vs_Nonresponsive/combined.meme \
+  Meme_differential_AP2_IV-3/Repressed_vs_Nonresponsive/combined.meme
 
